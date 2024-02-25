@@ -15,6 +15,15 @@ async function performAction(e) {
   const zipCode = document.getElementById('zip').value;
   const feelings = document.getElementById('feelings').value;
 
+  // Check if zip code is empty
+  if (!zipCode) {
+    // Clear all fields
+    clearFields();
+    clearWeatherBox();
+    return;
+  }
+
+
   try {
     // Fetch weather data from OpenWeatherMap API
     const data = await getWeatherData(zipCode);
@@ -46,6 +55,24 @@ async function performAction(e) {
     // Handle error - show error message to the user, for example
     document.getElementById('error').textContent = 'Error fetching weather data. Please try again later.';
   }
+}
+// Function to clear all input fields
+function clearFields() {
+  document.getElementById('zip').value = '';
+  document.getElementById('feelings').value = '';
+  document.getElementById('error').textContent = ''; // Clear error message
+}
+
+// Function to clear the weather box
+function clearWeatherBox() {
+  const dateElement = document.getElementById('date');
+  const tempElement = document.getElementById('temp');
+  const contentElement = document.getElementById('content');
+
+  if (dateElement) dateElement.innerHTML = '';
+  if (tempElement) tempElement.innerHTML = '';
+  if (contentElement) contentElement.innerHTML = '';
+
 }
 
 // Function to GET weather data from OpenWeatherMap API using zip code 
